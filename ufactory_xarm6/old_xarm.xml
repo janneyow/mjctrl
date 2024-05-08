@@ -1,0 +1,200 @@
+<mujoco model="xarm6_with_gripper">
+    <compiler angle="radian" meshdir="assets" texturedir="assets"/>
+
+    <extension>
+        <plugin plugin="mujoco.sdf.sdflib">
+        <instance name="sdf">
+            <config key="aabb" value="0"/>
+        </instance>
+        </plugin>
+    </extension>
+
+    <option gravity="0 0 -9.81"/>
+
+    <!-- for sdf calculations -->
+    <!-- default: sdf_iterations="10" sdf_initpoints="40" -->
+    <option sdf_iterations="10" sdf_initpoints="40"/>
+
+    <actuator>
+        <motor ctrllimited="true" ctrlrange="-10.0 10.0" forcerange="-10 10" forcelimited="true" joint="joint1" name="act1"/>
+        <motor ctrllimited="true" ctrlrange="-10.0 10.0" forcerange="-10 10" forcelimited="true" joint="joint2" name="act2"/>
+        <motor ctrllimited="true" ctrlrange="-10.0 10.0" forcerange="-10 10" forcelimited="true" joint="joint3" name="act3"/>
+        <motor ctrllimited="true" ctrlrange="-10.0 10.0" forcerange="-10 10" forcelimited="true" joint="joint4" name="act4"/>
+        <motor ctrllimited="true" ctrlrange="-10.0 10.0" forcerange="-10 10" forcelimited="true" joint="joint5" name="act5"/>
+        <motor ctrllimited="true" ctrlrange="-10.0 10.0" forcerange="-10 10" forcelimited="true" joint="joint6" name="act6"/>
+        <position name='pos_left_finger' ctrllimited="true" kp="1" kv="0.05" joint='drive_joint' ctrlrange='0. 0.85'/>
+        <position name='pos_right_finger' ctrllimited="true" kp="1" kv="0.05" joint='right_outer_knuckle_joint' ctrlrange='0. 0.85'/>
+    </actuator>
+
+    <asset>
+        <mesh name="base" file="base.stl" />
+        <mesh name="link1" file="link1.stl" />
+        <mesh name="link2" file="link2.stl" />
+        <mesh name="link3" file="link3.stl" />
+        <mesh name="link4" file="link4.stl" />
+        <mesh name="link5" file="link5.stl" />
+        <mesh name="end_tool" file="end_tool.STL" />
+        <mesh name="ft_sensor_scaled" file="ft_sensor_scaled.STL" />
+        <mesh name="d435_with_cam_stand" file="d435_with_cam_stand.STL" />
+        <mesh name="base_link" file="base_link.STL" />
+        <mesh name="left_outer_knuckle" file="left_outer_knuckle.STL" />
+        <mesh name="left_finger" file="left_finger.STL" />
+        <mesh name="left_inner_knuckle" file="left_inner_knuckle.STL" />
+        <mesh name="right_outer_knuckle" file="right_outer_knuckle.STL" />
+        <mesh name="right_finger" file="right_finger.STL" />
+        <mesh name="right_inner_knuckle" file="right_inner_knuckle.STL" />
+
+        <!-- spoon -->
+        <texture name="texspoon" type="2d" file="steel-brushed.png"/>
+        <material name="matspoon" texture="texspoon"/>
+        <mesh name="spoon" file="spoon.STL" scale=".001 .001 .001">
+            <plugin instance="sdf"/>
+        </mesh>
+    </asset>
+
+    <worldbody>
+        <geom type="mesh" rgba="1 1 1 1" mesh="base" />
+        <body name="link1" pos="0 0 0.267">
+            <inertial pos="0.00022 0.02951 -0.0124" quat="0.976202 0.216118 -0.00194069 0.0178849" mass="2.3814" diaginertia="0.00585677 0.00544457 0.00312311" />
+            <joint name="joint1" pos="0 0 0" axis="0 0 1" limited="true" range="-3.11018 3.11018" damping="1" frictionloss="1" />
+            <geom type="mesh" rgba="1 1 1 1" mesh="link1" />
+            <body name="link2" pos="0 0 0" quat="0.707105 -0.707108 0 0">
+                <inertial pos="0.03881 -0.22783 0.03496" quat="0.708601 0.62621 0.128147 -0.298871" mass="2.2675" diaginertia="0.0304531 0.0270745 0.0039329" />
+                <joint name="joint2" pos="0 0 0" axis="0 0 1" limited="true" range="-2.059 2.0944" damping="1" frictionloss="1" />
+                <geom type="mesh" rgba="1 1 1 1" mesh="link2" />
+                <body name="link3" pos="0.0535 -0.2845 0">
+                    <inertial pos="0.07041 0.11631 0.0107" quat="0.123238 0.405409 -0.733474 0.531482" mass="1.875" diaginertia="0.00536785 0.00536785 0.00536785" />
+                    <joint name="joint3" pos="0 0 0" axis="0 0 1" limited="true" range="-3.11018 0.19198" damping="1" frictionloss="1" />
+                    <geom type="mesh" rgba="1 1 1 1" mesh="link3" />
+                    <body name="link4" pos="0.0775 0.3425 0" quat="0.707105 -0.707108 0 0">
+                        <inertial pos="-0.00018 0.01798 -0.02291" quat="0.999272 0.0369286 -0.00225574 0.00934306" mass="1.3192" diaginertia="0.0048962 0.00447396 0.0013261" />
+                        <joint name="joint4" pos="0 0 0" axis="0 0 1" limited="true" range="-3.11018 3.11018" damping="1" frictionloss="1" />
+                        <geom type="mesh" rgba="1 1 1 1" mesh="link4" />
+                        <body name="link5" pos="0 0 0" quat="0.707105 0.707108 0 0">
+                            <inertial pos="0.0651 0.03096 0.00315" quat="-0.0151262 0.551316 -0.351703 0.75639" mass="1.33854" diaginertia="0.00253403 0.00196507 0.00114012" />
+                            <joint name="joint5" pos="0 0 0" axis="0 0 1" limited="true" range="-1.69297 3.11018" damping="1" frictionloss="1" />
+                            <geom type="mesh" rgba="1 1 1 1" mesh="link5" />
+                            <body name="link6" pos="0.076 0.097 0" quat="0.707105 -0.707108 0 0">
+                                <inertial pos="0.0046396 -0.00165489 0.0681261" quat="0.704798 -0.0022968 0.0166996 0.709208" mass="1.38018" diaginertia="0.00334838 0.00302786 0.0011071" />
+                                <joint name="joint6" pos="0 0 0" axis="0 0 1" limited="true" range="-3.11018 3.11018" damping="1" frictionloss="1" />
+                                <geom type="mesh" rgba="0.753 0.753 0.753 1" mesh="end_tool" name="end_tool"/>
+                                <geom pos="0 0 0.052" quat="0.707105 0 0 -0.707108" type="mesh" rgba="0.753 0.753 0.753 1" mesh="ft_sensor_scaled" name="ft_sensor"/>
+                                <geom pos="0 0 0.06" type="mesh" rgba="0.753 0.753 0.753 1" mesh="d435_with_cam_stand" name="camera_stand"/>
+                                <camera name="d435" pos="0.06 -0.02 0.12" euler="0 3.1459 1.5708"/>
+                                
+                                <geom pos="0 0 0.06" type="mesh" rgba="1 1 1 1" mesh="base_link" name="base_link"/>
+
+                                
+                                <!-- This site was added for visualization. -->
+                                <body name="link_eef" pos="0 0 0" quat="1 0 0 0">
+                                
+                                    <site name='ft_frame' pos='0 0 0.0' size="0.01 0.01 0.01" euler='3.1459 0 1.5708' rgba="0 1 0 1" type="sphere" group="1"/>
+                                    <!-- <inertial pos="0 0 0" mass="0.0001" diaginertia="0 0 0"/> -->
+                                    <!-- Dummy body to execute force -->
+                                    <!-- <body name = "dummy_body" pos = "0 0 0.2">
+                                        <geom type="sphere" pos="0 0 0" size="0.01 0.01 0.01" rgba="0 1 1 0.5" mass="0" group="1"/>
+                                    </body> -->
+
+                                    <body name="link_tcp" pos="0 0 0.212" euler="3.1459 1.5708 0">
+                                        <geom type="sphere" pos="0 0 0" size="0.01 0.01 0.01" rgba="0 1 1 0.5" group="0" mass="0" name="tcp"/>
+                                        <site name="link_tcp" pos="0 0 0" size="0.01 0.01 0.01" rgba="1 0 0 0.5" type="sphere" group="0"/>
+                                        <!-- <site name="ee_x" pos="0.05 0 0" size="0.005 .05"  quat="0.707105  0 0.707108 0 " rgba="1 0 0 0.5" type="cylinder" group="0"/> -->
+                                        <!-- <site name="ee_y" pos="0 0.05 0" size="0.005 .05" quat="0.707105 0.707108 0 0" rgba="0 1 0 0.5" type="cylinder" group="0"/> -->
+                                        <!-- <site name="ee_z" pos="0 0 0.05" size="0.005 .05" quat="1 0 0 0" rgba="0 0 1 0.5" type="cylinder" group="0"/> -->
+                                    </body>
+
+                                    <body name="left_outer_knuckle" pos="0 0.035 0.119098">
+                                        <inertial pos="0 0.021559 0.015181" quat="0.47789 0.87842 0 0" mass="0.033618" diaginertia="1.9111e-05 1.79089e-05 1.90167e-06" />
+                                        <joint name="drive_joint" pos="0 0 0" axis="1 0 0" limited="true" range="0 0.85" />
+                                        <geom type="mesh" rgba="0.753 0.753 0.753 1" mesh="left_outer_knuckle" name="left_outer_knuckle"/>
+                                        <body name="left_finger" pos="0 0.035465 0.042039">
+                                            <inertial pos="0 -0.016413 0.029258" quat="0.697634 0.115353 -0.115353 0.697634" mass="0.048304" diaginertia="1.88037e-05 1.7493e-05 3.56792e-06" />
+                                            <joint name="left_finger_joint" pos="0 0 0" axis="-1 0 0" limited="true" range="0 0.85" />
+                                            <geom type="mesh" rgba="0.753 0.753 0.753 1" mesh="left_finger" name="left_finger" />
+                                        </body>
+                                    </body>
+                                    <body name="left_inner_knuckle" pos="0 0.02 0.134098">
+                                        <inertial pos="1.86601e-06 0.0220468 0.0261335" quat="0.664139 -0.242732 0.242713 0.664146" mass="0.0230126" diaginertia="8.34216e-06 6.0949e-06 2.75601e-06" />
+                                        <joint name="left_inner_knuckle_joint" pos="0 0 0" axis="1 0 0" limited="true" range="0 0.85" />
+                                        <geom type="mesh" rgba="0.753 0.753 0.753 1" mesh="left_inner_knuckle" name="left_inner_knuckle"/>
+                                    </body>
+                                    <body name="right_outer_knuckle" pos="0 -0.035 0.119098">
+                                        <inertial pos="0 -0.021559 0.015181" quat="0.87842 0.47789 0 0" mass="0.033618" diaginertia="1.9111e-05 1.79089e-05 1.90167e-06" />
+                                        <joint name="right_outer_knuckle_joint" pos="0 0 0" axis="-1 0 0" limited="true" range="0 0.85" />
+                                        <geom type="mesh" rgba="0.753 0.753 0.753 1" mesh="right_outer_knuckle" name="right_outer_knuckle"/>
+                                        <body name="right_finger" pos="0 -0.035465 0.042039">
+                                            <inertial pos="0 0.016413 0.029258" quat="0.697634 -0.115356 0.115356 0.697634" mass="0.048304" diaginertia="1.88038e-05 1.7493e-05 3.56779e-06" />
+                                            <joint name="right_finger_joint" pos="0 0 0" axis="1 0 0" limited="true" range="0. 0.85" />
+                                            <geom type="mesh" rgba="0.753 0.753 0.753 1" mesh="right_finger" name="right_finger"/>
+                                        </body>
+                                    </body>
+                                    <body name="right_inner_knuckle" pos="0 -0.02 0.134098">
+                                        <inertial pos="1.866e-06 -0.022047 0.026133" quat="0.66415 0.242702 -0.242721 0.664144" mass="0.023013" diaginertia="8.34209e-06 6.0949e-06 2.75601e-06" />
+                                        <joint name="right_inner_knuckle_joint" pos="0 0 0" axis="-1 0 0" limited="true" range="0. 0.85" />
+                                        <geom type="mesh" rgba="0.753 0.753 0.753 1" mesh="right_inner_knuckle" />
+                                    </body>
+                                    <body name="spoon" pos="0 0 0.2" euler="-3.14159 1.5708 0">
+                                        <geom type="sdf" name="spoon" mesh="spoon" material="matspoon" mass="0.025" group="1">
+                                            <plugin instance="sdf"/>
+                                        </geom>
+                                    </body>
+                                    <!-- <body name="spoon" pos="0 0 0.3">
+                                        <geom name="spoon" type="cylinder" pos="0 0 0" size="0.01 0.08" rgba="1 1 0 1" mass="0.05" group="1"/>
+                                    </body> -->
+                                </body>
+                            </body>
+                        </body>
+                    </body>
+                </body>
+            </body>
+        </body>
+
+        <camera name="global" pos="0.913 -0.192 0.793" xyaxes="0.431 0.903 0.000 -0.621 0.296 0.725"/>
+
+    </worldbody>
+
+    <equality>
+        <joint joint1="drive_joint" joint2="left_finger_joint"/>
+        <joint joint1="drive_joint" joint2="left_inner_knuckle_joint"/>
+        <joint joint1="drive_joint" joint2="right_finger_joint"/>
+        <joint joint1="drive_joint" joint2="right_inner_knuckle_joint"/>
+        <joint joint1="drive_joint" joint2="right_outer_knuckle_joint"/>
+
+        <joint joint1="right_outer_knuckle_joint" joint2="right_finger_joint"/>
+        <joint joint1="right_outer_knuckle_joint" joint2="right_inner_knuckle_joint"/>
+	</equality>
+
+    <contact>
+        <exclude body1= "left_finger" body2 = "left_inner_knuckle"/>
+        <exclude body1= "left_finger" body2 = "left_outer_knuckle"/>
+        <exclude body1= "left_inner_knuckle" body2 = "left_outer_knuckle"/>
+        <exclude body1= "right_finger" body2 = "right_inner_knuckle"/>
+        <exclude body1= "right_finger" body2 = "right_outer_knuckle"/>
+        <exclude body1= "right_inner_knuckle" body2 = "right_outer_knuckle"/>
+        <exclude body1= "right_inner_knuckle" body2 = "right_outer_knuckle"/>
+        <exclude body1= "left_finger" body2 = "right_finger"/>
+        <exclude body1= "left_inner_knuckle" body2 = "right_inner_knuckle"/>
+        <exclude body1= "left_outer_knuckle" body2 = "right_outer_knuckle"/>
+        <exclude body1= "link_tcp" body2 = "left_inner_knuckle"/>
+        <exclude body1= "link_tcp" body2 = "left_outer_knuckle"/>
+        <exclude body1= "link_tcp" body2 = "left_finger"/>
+        <exclude body1= "link_tcp" body2 = "right_inner_knuckle"/>
+        <exclude body1= "link_tcp" body2 = "right_outer_knuckle"/>
+        <exclude body1= "link_tcp" body2 = "right_finger"/>
+        <exclude body1= "left_finger" body2 = "spoon"/>
+        <exclude body1= "right_finger" body2 = "spoon"/>
+    </contact>
+
+    <sensor>
+        <force name="force_ee" site="ft_frame"/>
+        <torque name="torque_ee" site="ft_frame"/>
+    </sensor>
+
+    <option cone="pyramidal" solver="Newton">
+        <flag gravity="enable"/>
+    </option>
+
+    <keyframe>
+        <key name="home" qpos="0 0 0 0 -1.3988 0 0 0 0 0 0 0" ctrl="0 0 0 0 -1.3988 0 0 0"/>
+    </keyframe>
+</mujoco>
